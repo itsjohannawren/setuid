@@ -7,7 +7,6 @@
 
 const char *user;
 struct passwd *pw;
-int errsv;
 
 int main (int argc, char *const *argv, char *const *envp) {
 	if (argc < 3) {
@@ -30,19 +29,16 @@ int main (int argc, char *const *argv, char *const *envp) {
 
 	if (geteuid () == 0) {
 		if (setgid (pw->pw_gid) == -1) {
-			errsv = errno;
-			printf ("Error: Failed to set GID to %i: %s\n", (int) pw->pw_gid, strerror (errsv));
+			printf ("Error: Failed to set GID to %i: %s\n", (int) pw->pw_gid, strerror (errno));
 			return (1);
 		}
 		if (setuid (pw->pw_uid) == -1) {
-			errsv = errno;
-			printf ("Error: Failed to set UID to %i: %s\n", (int) pw->pw_uid, strerror (errsv));
+			printf ("Error: Failed to set UID to %i: %s\n", (int) pw->pw_uid, strerror (errno));
 			return (1);
 		}
 	}
 
 	execve (*argv, argv, envp);
-	errsv = errno;
-	printf ("Error: Failed to run %s: %s\n", *argv, strerror (errsv));
+	printf ("Error: Failed to run %s: %s\n", *argv, strerror (errno));
 	return (1);
 }
