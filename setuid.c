@@ -28,7 +28,7 @@ int main (int argc, char *const *argv, char *const *envp) {
 		return (1);
 	}
 
-	if ((geteuid () == 0) {
+	if (geteuid () == 0) {
 		if (setgid (pw->pw_gid) == -1) {
 			errsv = errno;
 			printf ("Error: Failed to set GID to %i: %s\n", (int) pw->pw_gid, strerror (errsv));
