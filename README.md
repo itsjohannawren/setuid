@@ -19,3 +19,5 @@ Notes
 -----
 
 The command specified must be a full path. `setuid` will not scan all of the directories in `PATH` for it.
+
+If you are already running as the target user `setuid` will simply execute the desired program. If you're not that or root the program will error.
