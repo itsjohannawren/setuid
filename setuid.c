@@ -8,7 +8,7 @@
 const char *user;
 struct passwd *pw;
 
-int main (int argc, char *const *argv, char *const *envp) {
+int main (int argc, char **argv, char **envp) {
 	if (argc < 3) {
 		printf ("Usage:\n  %s <USER> <COMMAND> [ARGS]\n", argv [0]);
 		return (1);
