@@ -5,11 +5,33 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#ifndef GIT_SHA1
+#define GIT_SHA1 "(unknown)"
+#endif
+
+#ifndef GIT_BRANCH
+#define GIT_BRANCH "(unknown)"
+#endif
+
+#ifndef GIT_UNCLEAN
+#define GIT_UNCLEAN -1
+#endif
+
 const char *user;
 struct passwd *pw;
 
 int main (int argc, char **argv, char **envp) {
-	if (argc < 3) {
+	if ((argc == 2) && (strncmp (argv [1], "-v", 2) == 0)) {
+		fprintf (stderr, "setuid: %s@%s ", GIT_BRANCH, GIT_SHA1);
+		if (GIT_UNCLEAN == -1) {
+			fprintf (stderr, "unknown state\n");
+		} else if (GIT_UNCLEAN == 0) {
+			fprintf (stderr, "clean\n");
+		} else {
+			fprintf (stderr, "%i file%s unclean\n", GIT_UNCLEAN, (GIT_UNCLEAN == 1 ? "" : "s"));
+		}
+		return (0);
+	} else if (argc < 3) {
 		fprintf (stderr, "Usage:\n  %s <USER> <COMMAND> [ARGS]\n", argv [0]);
 		return (1);
 	}
