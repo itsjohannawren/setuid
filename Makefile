@@ -22,7 +22,7 @@ clean:
 
 .c.o:
 	@echo "CC  $<"
-	$(CC) $(CC_FLAGS) -o $@ $< 2>&1 | sed -e 's/^/    /'
+	@$(CC) $(CC_FLAGS) -o $@ $< 2>&1 | sed -e 's/^/    /'
 
 setuid: $(OBJ_FILES)
 	@echo "LD  $@"
