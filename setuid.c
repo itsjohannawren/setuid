@@ -10,7 +10,7 @@ struct passwd *pw;
 
 int main (int argc, char **argv, char **envp) {
 	if (argc < 3) {
-		printf ("Usage:\n  %s <USER> <COMMAND> [ARGS]\n", argv [0]);
+		fprintf (stderr, "Usage:\n  %s <USER> <COMMAND> [ARGS]\n", argv [0]);
 		return (1);
 	}
 	
@@ -18,27 +18,27 @@ int main (int argc, char **argv, char **envp) {
 	argv++;
 	pw = getpwnam (user);
 	if (! pw) {
-		printf ("Error: Unknown account: %s\n", user);
+		fprintf (stderr, "Error: Unknown user: %s\n", user);
 		return (1);
 	}
 
 	if ((geteuid () != 0) && (geteuid () != pw->pw_uid)) {
-		printf ("Error: Not running as root or the target user\n");
+		fprintf (stderr, "Error: Not running as root or the target user\n");
 		return (1);
 	}
 
 	if (geteuid () == 0) {
 		if (setgid (pw->pw_gid) == -1) {
-			printf ("Error: Failed to set GID to %i: %s\n", (int) pw->pw_gid, strerror (errno));
+			fprintf (stderr, "Error: Failed to set GID to %i: %s\n", (int) pw->pw_gid, strerror (errno));
 			return (1);
 		}
 		if (setuid (pw->pw_uid) == -1) {
-			printf ("Error: Failed to set UID to %i: %s\n", (int) pw->pw_uid, strerror (errno));
+			fprintf (stderr, "Error: Failed to set UID to %i: %s\n", (int) pw->pw_uid, strerror (errno));
 			return (1);
 		}
 	}
 
 	execve (*argv, argv, envp);
-	printf ("Error: Failed to run %s: %s\n", *argv, strerror (errno));
+	fprintf (stderr, "Error: Failed to run %s: %s\n", *argv, strerror (errno));
 	return (1);
 }
