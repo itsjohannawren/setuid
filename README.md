@@ -8,12 +8,20 @@ Most of the time programs are launched by the user they should run as. Other tim
 Usage
 -----
 
-    setuid <USER> <COMMAND> [ARGUMENTS]
+    setuid [-v] [<USER> <COMMAND> [ARGUMENTS]]
 
 Example
 -------
 
     setuid influxdb /opt/influxdb/influxd -config /etc/influxdb/config.toml
+
+Options
+-------
+
+* `-v`: Show version information (Git branch, commit short SHA1, repo clean status)
+* `<USER>`: Username to run the command as. Not the user's UID.
+* `<COMMAND>`: Absolute path to the command you want to run. No `PATH` checking is done.
+* `<ARGUMENTS>`: Any arguments you'd like to pass to `<COMMAND>`. Do not add a `--` unless you want it sent to `<COMMAND>`.
 
 Notes
 -----
