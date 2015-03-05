@@ -32,7 +32,7 @@ int main (int argc, char **argv, char **envp) {
 		}
 		return (0);
 	} else if (argc < 3) {
-		fprintf (stderr, "Usage:\n  %s <USER> <COMMAND> [ARGS]\n", argv [0]);
+		fprintf (stderr, "Usage:\n  %s [-v] [<USER> <COMMAND> [ARGS]]\n", argv [0]);
 		return (1);
 	}
 	
